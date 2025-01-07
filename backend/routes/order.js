@@ -37,18 +37,22 @@ router.post('/place-order', fetchUser, async (req, res) => {
 
 //get order histry of a particular user
 
-// router.post('/get-order-history',fetchUser,async(req,res)=>{
-//     try {
-//         const id = req.user.id;
-//         const 
-//     } catch (error) {
-//         res.status(500).json({
-//             status:false,
-//             msg:"Internal server error",
-//             error:error
-//         })
-//     }
-// })
+router.get('/get-order-history',fetchUser,async(req,res)=>{
+    try {
+        const id = req.user.id;
+        const data = await User.findById(id).select(['orders','-_id']).populate({path:'orders',populate:'book'});
+        res.json({
+            status:true,
+            data:data.orders.reverse()
+        })
+    } catch (error) {
+        res.status(500).json({
+            status:false,
+            msg:"Internal server error",
+            error:error
+        })
+    }
+})
 
 
 

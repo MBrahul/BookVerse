@@ -8,7 +8,7 @@ const authSlice = createSlice({
             state.isLoggedIn = true;
         },
         logout(state){
-            state.isLoggedIn=false;
+            state.isLoggedIn=false; 
         },
         changeRole(state,action){
             const role = action.payload;

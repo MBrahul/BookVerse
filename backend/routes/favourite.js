@@ -12,10 +12,10 @@ router.put('/add-book-to-favourite', fetchUser, async (req, res) => {
         const user = await User.findById(id);
         const isBookFavourite = user.favourites.includes(bookId);
         if (isBookFavourite) {
-            return res.status(200).json({ status: true, msg: "Book is alreday in favourites" });
+            return res.status(200).json({ status: true, msg: "Book is already in favourites" });
         }
         await User.findByIdAndUpdate(id, { $push: { favourites: bookId } });
-        return res.status(200).json({ status: true, message: "Book added to favourites" });
+        return res.status(200).json({ status: true, msg: "Book added to favourites" });
     } catch (error) {
         res.status(500).json({
             msg: "Internal server error"
@@ -26,7 +26,7 @@ router.put('/add-book-to-favourite', fetchUser, async (req, res) => {
 
 
 // remove book in favourite
-router.put('/remove-book-from-favourite', fetchUser, async (req, res) => {
+router.put('/remove-book-from-favourites', fetchUser, async (req, res) => {
     try {
         const id = req.user.id;
         const { bookId } = req.body;
@@ -42,4 +42,21 @@ router.put('/remove-book-from-favourite', fetchUser, async (req, res) => {
         })
     }
 })
+
+router.get('/get-favourite-books', fetchUser, async (req, res) => {
+    try {
+        const id = req.user.id;
+        // const user = await User.findById(id);
+        const data = await User.findById(id).select('favourites').populate('favourites');
+        res.json({
+            status:true,
+            data:data.favourites.reverse()
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: "Internal server error"
+        })
+    }
+})
+
 module.exports = router;

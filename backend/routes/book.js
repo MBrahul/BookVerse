@@ -32,7 +32,8 @@ router.post('/add-book',fetchUser,[body('title', 'Title must be 3 letters').isLe
             title,url,author,desc,price,language
         });
         res.status(200).json({
-            status:true
+            status:true,
+            msg:"Book added successfully"
         });
     } catch (error) {
         res.status(500).json({
@@ -70,7 +71,8 @@ router.put('/update-book/:id',fetchUser,[body('title', 'Title must be 3 letters'
             title,url,author,desc,price,language
         });
         res.status(200).json({
-            status:true
+            status:true,
+            msg:"Book updated successfully"
         });
     } catch (error) {
         res.status(500).json({
@@ -98,7 +100,8 @@ router.delete('/delete-book/:id',fetchUser,async(req,res)=>{
         const {id} = req.params;
         await Book.findByIdAndDelete(id);
         res.status(200).json({
-            status:true
+            status:true,
+            msg:"Book deleted successfully"
         });
     } catch (error) {
         res.status(500).json({

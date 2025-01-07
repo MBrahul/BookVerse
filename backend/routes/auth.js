@@ -99,7 +99,7 @@ router.post('/sign-in', [body('username', 'Username must be 3 letters').isLength
         if (!user) {
             return res.status(400).json({
                 status: false,
-                msg: "User not found"
+                msg: "Invalid credentials"
             })
         }
 
@@ -122,7 +122,7 @@ router.post('/sign-in', [body('username', 'Username must be 3 letters').isLength
             else {
                 return res.status(400).json({
                     status: false,
-                    msg: "User not found"
+                    msg: "Invalid credentials"
                 })
             }
         })
@@ -141,7 +141,7 @@ router.post('/sign-in', [body('username', 'Username must be 3 letters').isLength
 router.get('/get-user-info', fetchUser, async (req, res) => {
     try {
         const id = req.user.id;
-        const user = await User.findById(id).select('-password').populate(["favourites", "cart", { path: "orders", populate: { path: "book" } }]);
+        const user = await User.findById(id).select('-password');
         // console.log(user)
         res.json({
             status: true,
@@ -165,7 +165,8 @@ router.put('/update-address', fetchUser, async (req, res) => {
         // console.log(newAddress)
         await User.findByIdAndUpdate(id, { address: newAddress });
         return res.status(200).json({
-            status: true
+            status: true,
+            msg:"Address updated successfully"
         })
     } catch (error) {
         res.status(500).json({
