@@ -91,7 +91,10 @@ Redux.js for state management, ensuring smooth interactions.
 Responsive design using Tailwind CSS for seamless usability across devices.
 <br/>
 <br/>
-![Screenshot (107)](https://github.com/MBrahul/BookVerse/blob/main/snaps/admin_editbook_page.png)
+![Screenshot (107)](https://github.com/MBrahul/BookVerse/blob/main/snaps/signup_page.png)
+<br/>
+<br/>
+![Screenshot (107)](https://github.com/MBrahul/BookVerse/blob/main/snaps/login_page.png)
 <br/>
 <br/>
 <br/>
