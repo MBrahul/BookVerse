@@ -31,7 +31,7 @@ const Navbar = () => {
             <nav className='relative z-50 flex bg-zinc-800 text-white px-8 py-4 items-center justify-between'>
                 <div className="flex items-center">
                     <img className='h-10 me-4' src="https://cdn-icons-png.flaticon.com/128/10433/10433049.png" alt="logo" />
-                    <Link to={'/'} className='text-2xl font-semibold'>BookBazaar</Link>
+                    <Link to={'/'} className='text-2xl font-semibold'>BookVerse</Link>
                 </div>
                 <div className="nav-links-bookbazaar block md:flex items-center gap-4">
                     <div className="hidden md:flex flex gap-4">
