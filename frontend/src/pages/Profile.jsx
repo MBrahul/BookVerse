@@ -10,11 +10,12 @@ import MobileNav from '../components/Profile/MobileNav'
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [profile, setProfile] = useState();
+  const host = "https://bookverse-n3o3.onrender.com";
   const headers = {
     "auth-token": localStorage.getItem("token")
   };
   const getData = async () => {
-    const res = await axios.get("http://localhost:5500/api/auth/get-user-info", { headers });
+    const res = await axios.get(`${host}/api/auth/get-user-info`, { headers });
     setProfile(res.data.data);
   }
   useEffect(() => {
@@ -28,7 +29,7 @@ const Profile = () => {
         <>
           <div className='md:w-1/6 w-full h-auto lg:h-screen'>
             <Sidebar profile = {profile}/>
-            <MobileNav/>
+            {/* <MobileNav/> */}
           </div>
           <div className='md:w-5/6 w-full'>
             <Outlet />

@@ -32,7 +32,7 @@ const Sidebar = (props) => {
             </div>
 
 
-            {role === "user" && (<div className='w-full flex-col items-center justify-center hidden lg:flex gap-4'>
+            {role === "user" && (<div className='w-full  flex flex-col items-center justify-center gap-4 lg:py-0 py-8'>
                 <Link
                     to={'/profile'}
                     className='text-zinc-100 font-semibold w-full py-2 text-center hover:bg-zinc-900 rounded transitions-all duration-300'
@@ -56,7 +56,7 @@ const Sidebar = (props) => {
 
             </div>)}
 
-            {role === "admin" && (<div className='w-full flex-col items-center justify-center hidden lg:flex gap-4'>
+            {role === "admin" && (<div className='w-full  flex flex-col items-center justify-center gap-4'>
                 <Link
                     to={'/profile'}
                     className='text-zinc-100 font-semibold w-full py-2 text-center hover:bg-zinc-900 rounded transitions-all duration-300'
@@ -71,7 +71,7 @@ const Sidebar = (props) => {
                    Add Book
                 </Link>
             </div>)}
-            <button className='bg-zinc-900 w-3/6 lg:w-full mt-4 lg:mt-0 text-white font-semibold flex items-center justify-center py-2 rounded hover:bg-white hover:text-zinc-900 transition-all duration-300' onClick={handleLogOut}>
+            <button className='bg-zinc-900 sm:w-3/6 w-full mt-4 lg:mt-0 text-white font-semibold flex items-center justify-center py-2 rounded hover:bg-white hover:text-zinc-900 transition-all duration-300' onClick={handleLogOut}>
                 Log Out  <MdLogout className='ms-4' />
             </button>
         </div>

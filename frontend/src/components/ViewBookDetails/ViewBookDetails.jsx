@@ -11,6 +11,7 @@ import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 
 const ViewBookDetails = () => {
+    const host = "https://bookverse-n3o3.onrender.com";
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const role = useSelector((state) => state.auth.role);
     const { id } = useParams();
@@ -18,7 +19,7 @@ const ViewBookDetails = () => {
     const navigate = useNavigate();
 
     const getData = async () => {
-        const res = await axios.get(`http://localhost:5500/api/book/get-book/${id}`);
+        const res = await axios.get(`${host}/api/book/get-book/${id}`);
         // console.log(res.data.data);
         setData(res.data.data);
     }
@@ -28,7 +29,7 @@ const ViewBookDetails = () => {
       };
     const addToFavourites = async()=>{
         try {
-            const res = await axios.put("http://localhost:5500/api/favourite/add-book-to-favourite",{bookId:data._id},{headers});
+            const res = await axios.put(`${host}/api/favourite/add-book-to-favourite`,{bookId:data._id},{headers});
             // console.log(res.data);
             toast.success(res.data.msg);
         } catch (error) {
@@ -39,7 +40,7 @@ const ViewBookDetails = () => {
 
     const addToCart = async()=>{
         try {
-            const res = await axios.put("http://localhost:5500/api/cart/add-to-cart",{bookId:data._id},{headers});
+            const res = await axios.put(`${host}/api/cart/add-to-cart`,{bookId:data._id},{headers});
             // console.log(res.data);
             toast.success(res.data.msg);
         } catch (error) {
@@ -51,7 +52,7 @@ const ViewBookDetails = () => {
     const handleDelete = async(id)=>{
         try {
             console.log(id);
-            const res = await axios.delete(`http://localhost:5500/api/book/delete-book/${id}`,{headers});
+            const res = await axios.delete(`${host}/api/book/delete-book/${id}`,{headers});
             // console.log(res.data);
             alert(res.data.msg);
             navigate('/all-books');
@@ -73,7 +74,7 @@ const ViewBookDetails = () => {
                             <img src={data.url} alt="" className=' md:h-[60vh] h-[5 0vh] lg:h-[70vh] rounded' />
 
 
-                            {isLoggedIn && role === "user" && (<div className='flex flex-col md:flex-row items-center justify-between lg:justify-start lg:flex-col mt-4 lg:mt-0'>
+                            {isLoggedIn && role === "user" && (<div className='flex lg:flex-col flex-row items-center justify-between lg:justify-start lg:flex-col mt-4 lg:mt-0'>
                                 <button className='bg-white rounded lg:rounded-full text-3xl p-3 text-red-500' title='Add to favourites' onClick={addToFavourites}>
                                     <FaHeart />
                                 </button>

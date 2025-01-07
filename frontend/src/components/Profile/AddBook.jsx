@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { ToastContainer,toast } from 'react-toastify';
 
 const AddBook = () => {
-
+    const host = "https://bookverse-n3o3.onrender.com";
     const [data, setData] = useState({
         url: "",
         title: "",
@@ -34,7 +34,7 @@ const AddBook = () => {
                 toast.error("All fields are required");
             }
             else{
-                const res = await axios.post("http://localhost:5500/api/book/add-book",data,{headers});
+                const res = await axios.post(`${host}/api/book/add-book`,data,{headers});
                 // console.log(res.data);
                 toast.success(res.data.msg);
                 setData({

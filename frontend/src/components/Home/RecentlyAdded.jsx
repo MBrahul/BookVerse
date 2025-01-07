@@ -6,10 +6,10 @@ import Loader from '../Loader/Loader';
 
 
 const RecentlyAdded = () => {
-
+    const host = "https://bookverse-n3o3.onrender.com";
     const [data,setData] = useState([]);
     const getData = async ()=>{
-        const res = await axios.get("http://localhost:5500/api/book/get-recent-books");
+        const res = await axios.get(`${host}/api/book/get-recent-books`);
         setData(res.data.data);
         // console.log(res.data.data);
     }

@@ -5,27 +5,23 @@ import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
-import {
-    Button,
-    Dialog,
-    DialogHeader,
-    DialogBody,
-    DialogFooter,
-  } from "@material-tailwind/react";
+import SeeUserData from '../../pages/SeeUserData';
 
 
 const AllOrders = () => {
+    const host = "https://bookverse-n3o3.onrender.com";
     const [data, setData] = useState();
-    const [open, setOpen] = useState(false);
     const headers = {
         "auth-token": localStorage.getItem("token")
     };
     const [option, setOption] = useState(-1);
     const [status, setStatus] = useState();
+    const [userDiv, setuserDiv] = useState("hiddend");
+    const [userDivData, setuserDivData] = useState();
 
     const getData = async () => {
         try {
-            const res = await axios.get("http://localhost:5500/api/order/get-all-orders", { headers });
+            const res = await axios.get(`${host}/api/order/get-all-orders`, { headers });
             // console.log(res.data.data);
             setData(res.data.data);
         } catch (error) {
@@ -44,17 +40,15 @@ const AllOrders = () => {
 
             }
             else {
-                const res = await axios.put(`http://localhost:5500/api/order/update-order-status/${id}`, { status }, { headers });
+                const res = await axios.put(`${host}/api/order/update-order-status/${id}`, { status }, { headers });
                 // console.log(res.data);
+                alert("Status updated successfully");
             }
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleOpen = ()=>{
-
-    }
     useEffect(() => {
         getData();
     }, [data])
@@ -171,7 +165,10 @@ const AllOrders = () => {
                                 </h1>
                             </div>
                             <div className='w-[5%]'>
-                                <button className="text-zinc-400 hover:text-white transition-all duration-300 text-normal">
+                                <button className="text-zinc-400 hover:text-white transition-all duration-300 text-normal" onClick={() => {
+                                    setuserDiv("fixed");
+                                    setuserDivData(item.user);
+                                }}>
                                     <FaLink />
                                 </button>
                             </div>
@@ -179,6 +176,16 @@ const AllOrders = () => {
                     ))}
                 </div>
             )}
+
+            {
+                userDivData && (
+                    <SeeUserData
+                        userDiv={userDiv}
+                        userDivData={userDivData}
+                        setuserDiv={setuserDiv}
+                    />
+                )
+            }
         </>
     )
 }

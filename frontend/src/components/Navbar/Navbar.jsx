@@ -78,7 +78,7 @@ const Navbar = () => {
                 ))}
 
                 {!isLoggedIn && (
-                    <div>
+                    <div className='flex flex-col gap-4'>
                         <Link to={'/log-in'} className=' text-white px-8 py-2 text-3xl font-semibold border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300' onClick={() => {
                             if (mobileNav === "hidden") {
                                 setMobileNav("block");

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Cart = () => {
   const [data, setData] = useState();
   const [total,setTotal] = useState(0);
+  const host = "https://bookverse-n3o3.onrender.com";
   const headers = {
     "auth-token": localStorage.getItem("token")
   };
@@ -15,7 +16,7 @@ const Cart = () => {
 
   const getData = async()=>{
     try {
-      const res = await axios.get('http://localhost:5500/api/cart/get-cart', { headers });
+      const res = await axios.get(`${host}/api/cart/get-cart`, { headers });
       // console.log(res.data);
       setData(res.data.data);
     } catch (error) {
@@ -25,7 +26,7 @@ const Cart = () => {
 
   const removeFromCart = async(id)=>{
     try {
-      const res = await axios.put('http://localhost:5500/api/cart/remove-from-cart', {bookId:id},{ headers });
+      const res = await axios.put(`${host}/api/cart/remove-from-cart`, {bookId:id},{ headers });
       toast.success(res.data.msg);
     } catch (error) {
       console.log(error);
@@ -34,7 +35,7 @@ const Cart = () => {
 
   const placeOrder = async()=>{
     try {
-        const res = await axios.post("http://localhost:5500/api/order/place-order",
+        const res = await axios.post(`${host}/api/order/place-order`,
           {orders:data},
           {headers}
         );

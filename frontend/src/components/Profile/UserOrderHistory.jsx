@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 const UserOrderHistory = () => {
+  const host = "https://bookverse-n3o3.onrender.com";
   const headers = {
     "auth-token": localStorage.getItem("token")
   };
@@ -13,7 +14,7 @@ const UserOrderHistory = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:5500/api/order/get-order-history", { headers });
+      const res = await axios.get(`${host}/api/order/get-order-history`, { headers });
       // console.log(res.data.data);
       setData(res.data.data);
     } catch (error) {

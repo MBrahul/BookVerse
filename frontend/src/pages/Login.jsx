@@ -12,7 +12,7 @@ const Login = () => {
         username: "",
         password: "",
     });
-
+    const host = "https://bookverse-n3o3.onrender.com";
    const navigate =  useNavigate();
    const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const Login = () => {
                 toast.error("All fields are required");
             }
             else{
-                const res = await axios.post("http://localhost:5500/api/auth/sign-in",values);
+                const res = await axios.post(`${host}/api/auth/sign-in`,values);
                 // console.log(res.data)
                 localStorage.setItem("id",res.data.data._id);
                 localStorage.setItem("token",res.data.token);

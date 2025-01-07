@@ -4,6 +4,7 @@ import Loader from '../Loader/Loader';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Settings = () => {
+  const host = "https://bookverse-n3o3.onrender.com";
   const headers = {
     "auth-token": localStorage.getItem("token")
   };
@@ -11,7 +12,7 @@ const Settings = () => {
   const [value, setValues] = useState();
   const [profile, setProfile] = useState();
   const getData = async () => {
-    const res = await axios.get("http://localhost:5500/api/auth/get-user-info", { headers });
+    const res = await axios.get(`${host}/api/auth/get-user-info`, { headers });
     // console.log(res.data.data.address);
     setProfile(res.data.data);
     setValues(res.data.data.address);
@@ -24,8 +25,8 @@ const Settings = () => {
 
   const updateAddress = async()=>{
     try {
-      const res = await axios.put("http://localhost:5500/api/auth/update-address",{address:value},{headers});
-      console.log(res.data);
+      const res = await axios.put(`${host}/api/auth/update-address`,{address:value},{headers});
+      // console.log(res.data);
       toast.success(res.data.msg);
     } catch (error) {
       // console.log(error);
@@ -38,7 +39,7 @@ const Settings = () => {
 
   return (
     <>
-      {!profile && <div> <Loader /> </div>}
+      {!profile && <div className='flex items-center justify-center h-[100%]'> <Loader /> </div>}
       {profile && (
         <div className='h-[100%] p-0 md:p-4 text-zinc-100'>
           <h1 className='text-3xl md:text-5xl font-semibold text-zinc-500 mb-8'>

@@ -4,13 +4,14 @@ import axios from 'axios';
 
 
 const BookCard = (props) => {
+    const host = "https://bookverse-n3o3.onrender.com";
     const { data, favourite } = props;
     const headers = {
         "auth-token": localStorage.getItem("token")
       };
     const removeFromFavourite = async () => {
        try {
-        const res = await axios.put('http://localhost:5500/api/favourite/remove-book-from-favourites', {bookId:data._id},{ headers });
+        const res = await axios.put(`${host}/api/favourite/remove-book-from-favourites`, {bookId:data._id},{ headers });
         // console.log(res.data);
        } catch (error) {
         

@@ -4,10 +4,10 @@ import BookCard from '../components/BookCard/BookCard'
 import axios from 'axios';
 
 const AllBooks = () => {
-
+  const host = "https://bookverse-n3o3.onrender.com";
   const [data,setData] = useState([]);
   const getData = async ()=>{
-      const res = await axios.get("http://localhost:5500/api/book/get-all-books");
+      const res = await axios.get(`${host}/api/book/get-all-books`);
       setData(res.data.data);
       // console.log(res.data.data);
   }

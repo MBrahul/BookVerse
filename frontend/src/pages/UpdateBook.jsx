@@ -13,6 +13,7 @@ const UpdateBook = () => {
         language: ""
     });
     const { id } = useParams();
+    const host = "https://bookverse-n3o3.onrender.com";
     const headers = {
         "auth-token": localStorage.getItem("token")
     };
@@ -24,7 +25,7 @@ const UpdateBook = () => {
     }
 
     const getData = async () => {
-        const res = await axios.get(`http://localhost:5500/api/book/get-book/${id}`);
+        const res = await axios.get(`${host}/api/book/get-book/${id}`);
         // console.log(res.data.data);
         setData(res.data.data);
     }
@@ -41,7 +42,7 @@ const UpdateBook = () => {
                 toast.error("All fields are required");
             }
             else{
-                const res = await axios.put(`http://localhost:5500/api/book/update-book/${id}`,data,{headers});
+                const res = await axios.put(`${host}/api/book/update-book/${id}`,data,{headers});
                 // console.log(res.data);
                 alert(res.data.msg);
                 navigate(`/view-book-details/${id}`);

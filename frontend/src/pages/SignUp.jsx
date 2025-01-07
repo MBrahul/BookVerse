@@ -11,7 +11,7 @@ const SignUp = () => {
         password: "",
         address: ""
     });
-
+    const host = "https://bookverse-n3o3.onrender.com";
    const navigate =  useNavigate();
 
     const handleChange = (e) => {
@@ -23,7 +23,7 @@ const SignUp = () => {
                 toast.error("All fields are required");
             }
             else{
-                const res = await axios.post("http://localhost:5500/api/auth/sign-up",values);
+                const res = await axios.post(`${host}/api/auth/sign-up`,values);
                 // console.log(res.data)
                 // if(res.data.status){
                     navigate('/log-in');
