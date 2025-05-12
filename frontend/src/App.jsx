@@ -32,6 +32,7 @@ export default function App() {
 
   return (
     <>
+    {/* nothing  */}
       <Navbar />
       <Routes>
         <Route exact path='/' element={<Home />} />
