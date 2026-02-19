@@ -5,6 +5,7 @@ import { authActions } from '../store/auth';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
+const host = import.meta.env.VITE_HOST || undefined;
 
 const Login = () => {
 
@@ -12,7 +13,7 @@ const Login = () => {
         username: "",
         password: "",
     });
-    const host = "https://bookverse-n3o3.onrender.com";
+
    const navigate =  useNavigate();
    const dispatch = useDispatch();
 

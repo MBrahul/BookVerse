@@ -71,8 +71,8 @@ const Sidebar = (props) => {
                    Add Book
                 </Link>
             </div>)}
-            <button className='bg-zinc-900 sm:w-3/6 w-full mt-4 lg:mt-0 text-white font-semibold flex items-center justify-center py-2 rounded hover:bg-white hover:text-zinc-900 transition-all duration-300' onClick={handleLogOut}>
-                Log Out  <MdLogout className='ms-4' />
+            <button className='px-1 bg-zinc-900 sm:w-3/6 w-full mt-4 lg:mt-0 text-white font-semibold flex items-center justify-center py-2 rounded hover:bg-white hover:text-zinc-900 transition-all duration-300' onClick={handleLogOut}>
+                Log Out
             </button>
         </div>
     )

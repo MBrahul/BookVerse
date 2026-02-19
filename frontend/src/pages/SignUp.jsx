@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
+const host = import.meta.env.VITE_HOST || undefined;
 
 const SignUp = () => {
     const [values, setValues] = useState({
@@ -11,7 +12,7 @@ const SignUp = () => {
         password: "",
         address: ""
     });
-    const host = "https://bookverse-n3o3.onrender.com";
+
    const navigate =  useNavigate();
 
     const handleChange = (e) => {

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Loader from '../Loader/Loader';
 import { toast, ToastContainer } from 'react-toastify';
 
+const host = import.meta.env.VITE_HOST || undefined;
+
 const Settings = () => {
-  const host = "https://bookverse-n3o3.onrender.com";
+  
   const headers = {
     "auth-token": localStorage.getItem("token")
   };

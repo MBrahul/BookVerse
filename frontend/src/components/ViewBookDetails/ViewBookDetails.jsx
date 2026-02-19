@@ -10,8 +10,11 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 
+
+const host = import.meta.env.VITE_HOST || undefined;
+
 const ViewBookDetails = () => {
-    const host = "https://bookverse-n3o3.onrender.com";
+   
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const role = useSelector((state) => state.auth.role);
     const { id } = useParams();

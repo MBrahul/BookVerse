@@ -5,10 +5,12 @@ import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const host = import.meta.env.VITE_HOST || undefined;
+
 const Cart = () => {
   const [data, setData] = useState();
   const [total,setTotal] = useState(0);
-  const host = "https://bookverse-n3o3.onrender.com";
+ 
   const headers = {
     "auth-token": localStorage.getItem("token")
   };

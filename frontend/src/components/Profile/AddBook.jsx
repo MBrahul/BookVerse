@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { ToastContainer,toast } from 'react-toastify';
 
+const host = import.meta.env.VITE_HOST || undefined;
+
 const AddBook = () => {
-    const host = "https://bookverse-n3o3.onrender.com";
+   
     const [data, setData] = useState({
         url: "",
         title: "",

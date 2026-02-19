@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5500;
+
 // const corsOptions = {
 //     origin: 'http://localhost:5173', // Replace with your frontend URL
 //     credentials: true // Enable set cookie
@@ -26,6 +27,9 @@ app.use('/api/cart',require('./routes/cart'));
 app.use('/api/order',require('./routes/order'));
 
 
+app.get('/',(req,res)=>{
+    res.send("Server is running");
+})
 
 
 app.listen(PORT,()=>{

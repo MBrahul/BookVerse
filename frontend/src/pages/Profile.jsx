@@ -6,11 +6,12 @@ import axios from 'axios'
 import Loader from '../components/Loader/Loader'
 import MobileNav from '../components/Profile/MobileNav'
 
+const host = import.meta.env.VITE_HOST || undefined;
 
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [profile, setProfile] = useState();
-  const host = "https://bookverse-n3o3.onrender.com";
+
   const headers = {
     "auth-token": localStorage.getItem("token")
   };

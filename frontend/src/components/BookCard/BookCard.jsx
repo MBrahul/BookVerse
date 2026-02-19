@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const host = import.meta.env.VITE_HOST || undefined;
 
 const BookCard = (props) => {
-    const host = "https://bookverse-n3o3.onrender.com";
+    
     const { data, favourite } = props;
     const headers = {
         "auth-token": localStorage.getItem("token")

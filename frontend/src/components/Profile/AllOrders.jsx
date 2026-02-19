@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import SeeUserData from '../../pages/SeeUserData';
-
+const host = import.meta.env.VITE_HOST || undefined;
 
 const AllOrders = () => {
-    const host = "https://bookverse-n3o3.onrender.com";
+   
     const [data, setData] = useState();
     const headers = {
         "auth-token": localStorage.getItem("token")

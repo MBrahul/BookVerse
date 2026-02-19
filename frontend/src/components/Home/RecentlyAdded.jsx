@@ -4,20 +4,30 @@ import axios from 'axios'
 import BookCard from '../BookCard/BookCard';
 import Loader from '../Loader/Loader';
 
+const host = import.meta.env.VITE_HOST || undefined;
+
 
 const RecentlyAdded = () => {
-    const host = "https://bookverse-n3o3.onrender.com";
+
     const [data,setData] = useState([]);
-    const getData = async ()=>{
-        const res = await axios.get(`${host}/api/book/get-recent-books`);
-        setData(res.data.data);
-        // console.log(res.data.data);
+
+
+    const getData = async () => {
+       try {
+         const res = await axios.get(`${host}/api/book/get-recent-books`);
+         setData(res.data.data);
+       } catch (error) {
+        console.log("Error in /api/book/get-recent-books :",error);
+       }
     }
+
+
     useEffect(()=>{
-        // console.log("rendering")
         getData();
     },[])
 
+
+    
     return (
         <>
             <div className='mt-8 px-8'>
