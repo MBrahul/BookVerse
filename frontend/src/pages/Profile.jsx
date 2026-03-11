@@ -10,7 +10,7 @@ const host = import.meta.env.VITE_HOST || undefined;
 
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState(null);
 
   const headers = {
     "auth-token": localStorage.getItem("token")

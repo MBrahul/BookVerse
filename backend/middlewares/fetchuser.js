@@ -9,7 +9,6 @@ const fetchUser = async(req,res,next)=>{
             msg:"authenticate with correct credentails"
         })
     }
-
     // console.log(token)
     try{
         jwt.verify(token,process.env.JWT_KEY,(err,data)=>{

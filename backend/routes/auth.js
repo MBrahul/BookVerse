@@ -46,7 +46,7 @@ router.post('/sign-up', [body('username', 'Username must be 3 letters').isLength
         const salt = await bcrypt.genSalt(10);
         const securedPassword = await bcrypt.hash(password, salt);
 
-        await User.create({
+        User.create({
             username, email, password: securedPassword, address
         }).then((user) => {
 
@@ -166,7 +166,7 @@ router.put('/update-address', fetchUser, async (req, res) => {
         await User.findByIdAndUpdate(id, { address: newAddress });
         return res.status(200).json({
             status: true,
-            msg:"Address updated successfully"
+            msg: "Address updated successfully"
         })
     } catch (error) {
         res.status(500).json({

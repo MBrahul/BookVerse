@@ -61,7 +61,7 @@ const AllOrders = () => {
                         <h1 className='text-5xl font-semibold text-zinc-500 mb-8'>
                             No Order History
                         </h1>
-                        <img src="./no_order.png" alt="image" className='h-[20vh] mb-8' />
+                        {/* <img src="./empty_cart.png" alt="logo" className='lg:h-[50vh]'/> */}
                     </div>
                 </div>
             )}
