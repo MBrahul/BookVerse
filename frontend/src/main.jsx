@@ -30,9 +30,17 @@ const appMiddleware = () => {
   return null;
 }
 
+const restrictRoutesForLoggedInUser = ({ request, context }, next) => {
+  // console.log("Auth Middleware");
+  const auth = store.getState().auth;
+  if (auth.isLoggedIn == false) {
+    next();
+  }
+  else throw redirect('/');
+}
 
 const authMiddleware = ({ request, context }, next) => {
-  console.log("Auth Middleware");
+  // console.log("Auth Middleware");
   const auth = store.getState().auth;
   if (auth.isLoggedIn == false) {
     throw redirect('/log-in');
@@ -41,7 +49,7 @@ const authMiddleware = ({ request, context }, next) => {
 }
 
 const adminRoleValidate = ({ request, context }, next) => {
-  console.log("Role Validate Middleware");
+  // console.log("Role Validate Middleware");
   const auth = store.getState().auth;
   if (auth.role === "admin") {
     next();
@@ -63,16 +71,18 @@ const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: "/all-books",
+        path: "all-books",
         Component: AllBooks
       },
       {
         path: "log-in",
-        Component: Login
+        Component: Login,
+        middleware:[restrictRoutesForLoggedInUser]
       },
       {
         path: "sign-up",
-        Component: SignUp
+        Component: SignUp,
+        middleware:[restrictRoutesForLoggedInUser]
       },
       {
         path: "/cart",
@@ -85,7 +95,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            Component:RoleBasedComponent,
+            Component: RoleBasedComponent,
             // Component:AllOrders
           },
           {

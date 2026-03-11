@@ -27,6 +27,7 @@ const Cart = () => {
     try {
       const res = await axios.put(`${host}/api/cart/remove-from-cart`, { bookId: id }, { headers });
       toast.success(res.data.msg);
+      getData();
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +51,7 @@ const Cart = () => {
       setTotal(total);
       total = 0;
     }
-  }, [data])
+  }, [])
 
   return (
     <>

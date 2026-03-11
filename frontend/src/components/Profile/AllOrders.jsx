@@ -39,6 +39,7 @@ const AllOrders = () => {
             if (!status) { }
             else {
                 const res = await axios.put(`${host}/api/order/update-order-status/${id}`, { status }, { headers });
+                getData();
                 alert("Status updated successfully");
             }
         } catch (error) {
