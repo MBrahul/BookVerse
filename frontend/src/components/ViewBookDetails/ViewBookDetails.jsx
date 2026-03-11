@@ -78,6 +78,13 @@ const ViewBookDetails = () => {
 
                     <div className='relative max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12'>
 
+                        <button
+                            onClick={() => navigate(-1)}
+                            className='relative mb-8 flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-zinc-500 hover:text-white border border-white/6 hover:border-white/20 bg-white/3 hover:bg-white/6 px-4 py-2 rounded-full transition-all duration-200 active:scale-95 w-fit h-fit'
+                        >
+                            ← Back
+                        </button>
+
                         {/* LEFT — Cover */}
                         <div className='w-full lg:w-2/5'>
                             <div className='sticky top-8'>
