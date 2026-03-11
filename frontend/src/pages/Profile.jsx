@@ -15,30 +15,44 @@ const Profile = () => {
   const headers = {
     "auth-token": localStorage.getItem("token")
   };
+
   const getData = async () => {
     const res = await axios.get(`${host}/api/auth/get-user-info`, { headers });
     setProfile(res.data.data);
   }
+
   useEffect(() => {
     getData();
   }, [])
 
   return (
-    <div className='bg-zinc-900 px-2 md:px-12 flex flex-col md:flex-row h-auto min-h-[90vh] py-8 gap-4 text-white'>
-      {!profile && (<div className='w-full h-[100%] flex items-center justify-center'><Loader /></div>)}
+    <div className='min-h-[90vh] bg-zinc-950 text-white'>
+
+      {/* Ambient glow */}
+      <div className="fixed top-20 left-10 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed bottom-20 right-10 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
+
+      {!profile && (
+        <div className='w-full min-h-[90vh] flex items-center justify-center'>
+          <Loader />
+        </div>
+      )}
+
       {profile && (
-        <>
-          <div className='md:w-1/6 w-full h-auto lg:h-screen'>
-            <Sidebar profile = {profile}/>
-            {/* <MobileNav/> */}
+        <div className='relative flex flex-col md:flex-row gap-6 px-4 sm:px-6 md:px-10 py-8 max-w-screen-xl mx-auto'>
+
+          {/* Sidebar */}
+          <div className='w-full md:w-1/5 md:sticky md:top-8 md:self-start'>
+            <Sidebar profile={profile} />
           </div>
-          <div className='md:w-5/6 w-full'>
+
+          {/* Main content */}
+          <div className='w-full md:w-4/5 bg-gradient-to-b from-zinc-800/40 to-zinc-900/40 border border-white/5 rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl shadow-black/30 backdrop-blur-sm min-h-[70vh]'>
             <Outlet />
           </div>
-        </>
-      )
 
-      }
+        </div>
+      )}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AiFillDelete } from "react-icons/ai";
 import Loader from '../components/Loader/Loader';
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,131 +9,157 @@ const host = import.meta.env.VITE_HOST || undefined;
 
 const Cart = () => {
   const [data, setData] = useState();
-  const [total,setTotal] = useState(0);
- 
+  const [total, setTotal] = useState(0);
+
   const headers = {
     "auth-token": localStorage.getItem("token")
   };
   const navigate = useNavigate();
 
-  const getData = async()=>{
+  const getData = async () => {
     try {
       const res = await axios.get(`${host}/api/cart/get-cart`, { headers });
-      // console.log(res.data);
       setData(res.data.data);
-    } catch (error) {
-      // console.log(error)
-    }
+    } catch (error) {}
   }
 
-  const removeFromCart = async(id)=>{
+  const removeFromCart = async (id) => {
     try {
-      const res = await axios.put(`${host}/api/cart/remove-from-cart`, {bookId:id},{ headers });
+      const res = await axios.put(`${host}/api/cart/remove-from-cart`, { bookId: id }, { headers });
       toast.success(res.data.msg);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const placeOrder = async()=>{
+  const placeOrder = async () => {
     try {
-        const res = await axios.post(`${host}/api/order/place-order`,
-          {orders:data},
-          {headers}
-        );
-        // console.log(res.data);
-         toast.success(res.data.msg);
-         navigate('/profile/orderHistory');
+      const res = await axios.post(`${host}/api/order/place-order`, { orders: data }, { headers });
+      toast.success(res.data.msg);
+      navigate('/profile/orderHistory');
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
-  useEffect(()=>{
-
+  useEffect(() => {
     getData();
-
-    if(data && data.length>0){
+    if (data && data.length > 0) {
       let total = 0;
-      data.map((item)=>{
-        total+=item.price;
-      })
+      data.map((item) => { total += item.price; })
       setTotal(total);
-      total=0;
+      total = 0;
     }
-
-  },[data])
+  }, [data])
 
   return (
     <>
-    <div className='bg-zinc-900 px-12 py-8 min-h-screen '>
-      {!data && <div className='w-full h-[90vh] flex items-center justify-center'><Loader /></div>}
-      {data && data.length === 0 && (
-        <div className="h-screen">
-          <div className='h-[100%] flex items-center justify-center flex-col'>
-            <h1 className='text-5xl lg:text-6xl font-semibold text-zinc-400'>
-              Empty Cart
-            </h1>
-            <img src="./empty_cart.png" alt="logo" className='lg:h-[50vh]'/>
+      <div className='min-h-screen bg-zinc-950 px-4 sm:px-8 md:px-12 py-10'>
+
+        {/* Ambient glow */}
+        <div className="fixed top-20 left-10 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="fixed bottom-20 right-10 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Loader */}
+        {!data && (
+          <div className='w-full h-[80vh] flex items-center justify-center'>
+            <Loader />
           </div>
-        </div>
-      )}
-      {data && data.length > 0 && (
-        <>
-          <h1 className='text-4xl font-semibold text-zinc-400 mb-8 text-center'>
-            Your Cart
-          </h1>
-          {data.map((item, i) => (
-            <div className='w-full my-4 rounded flex flex-col md:flex-row p-4 bg-zinc-800 justify-between items-center' key={i}>
-              <img src={item.url} alt="book_image" className='h-[20vh] md:h-[10vh] object-cover' />
-              <div className='w-full md:w-auto'>
-                <h1 className='text-xl text-zinc-100 font-semibold text-start mt-2 md:mt-0'>
-                  {item.title}
-                </h1>
-                <p className='text-normal text-zinc-300 mt-2 hidden lg:block'>
-                  {item.desc.slice(0, 100)}...
-                </p>
-                <p className='text-normal text-zinc-300 mt-2 hidden md:block lg:hidden'>
-                  {item.desc.slice(0, 65)}...
-                </p>
-                <p className='text-normal text-zinc-300 mt-2 block md:hidden'>
-                  {item.desc.slice(0, 100)}...
-                </p>
-              </div>
-              <div className='flex mt-4 w-full md:w-auto items-center justify-between'>
-                <h2 className='text-zinc-100 text-2xl font-semibold flex'>
-                  ₹ {item.price}
-                </h2>
-                <button className='bg-red-100 text-red-700 border border-red-700 rounded p-2 ms-12' onClick={()=>{
-                  removeFromCart(item._id);
-                }}>
-                  <AiFillDelete />
+        )}
+
+        {/* Empty cart */}
+        {data && data.length === 0 && (
+          <div className='flex flex-col items-center justify-center min-h-[70vh] gap-5'>
+            <img src="./empty_cart.png" alt="empty cart" className='h-40 sm:h-52 opacity-40' />
+            <p className='text-2xl sm:text-3xl font-bold text-zinc-500'>Your Cart is Empty</p>
+            <p className='text-sm text-zinc-600'>Add some books to get started</p>
+          </div>
+        )}
+
+        {/* Cart items */}
+        {data && data.length > 0 && (
+          <div className='max-w-4xl mx-auto'>
+
+            {/* Header */}
+            <div className="mb-8 border-l-4 border-blue-500 pl-4">
+              <p className="text-xs tracking-[0.2em] uppercase text-zinc-500 mb-1">Review Items</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">Your Cart</h1>
+            </div>
+
+            {/* Items */}
+            <div className='flex flex-col gap-4'>
+              {data.map((item, i) => (
+                <div
+                  key={i}
+                  className='relative flex flex-col sm:flex-row items-center sm:items-start gap-5 bg-gradient-to-b from-zinc-800/60 to-zinc-900 border border-white/5 rounded-3xl p-5 hover:border-white/10 transition-all duration-200'
+                >
+                  {/* Cover */}
+                  <div className='shrink-0 bg-zinc-950 rounded-2xl flex items-center justify-center p-3 h-32 w-24'>
+                    <img src={item.url} alt="book_image" className='h-full w-auto object-contain drop-shadow-xl' />
+                  </div>
+
+                  {/* Info */}
+                  <div className='flex-1 w-full'>
+                    <h1 className='text-base sm:text-lg font-semibold text-white leading-snug'>
+                      {item.title}
+                    </h1>
+                    <p className='text-xs text-zinc-500 mt-2 line-clamp-2 leading-relaxed'>
+                      {item.desc.slice(0, 120)}...
+                    </p>
+                    <div className='mt-4 flex items-center justify-between'>
+                      <span className='text-xl font-bold text-blue-400'>₹{item.price}</span>
+                      <button
+                        className='flex items-center gap-1.5 text-xs font-medium text-red-400 border border-red-500/20 bg-red-500/5 hover:bg-red-500/15 px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95'
+                        onClick={() => removeFromCart(item._id)}
+                      >
+                        <AiFillDelete className='text-sm' />
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Order summary */}
+            <div className='mt-8 flex justify-end'>
+              <div className='w-full sm:w-80 bg-gradient-to-b from-zinc-800/60 to-zinc-900 border border-white/6 rounded-3xl p-6 shadow-xl shadow-black/30'>
+
+                <h2 className='text-xs tracking-[0.2em] uppercase text-zinc-500 mb-4'>Order Summary</h2>
+
+                <div className='flex flex-col gap-2 mb-4'>
+                  <div className='flex items-center justify-between text-sm text-zinc-400'>
+                    <span>{data.length} {data.length === 1 ? "book" : "books"}</span>
+                    <span>₹{total}</span>
+                  </div>
+                  <div className='flex items-center justify-between text-sm text-zinc-400'>
+                    <span>Delivery</span>
+                    <span className='text-green-400 font-medium'>Free</span>
+                  </div>
+                </div>
+
+                <div className='h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4' />
+
+                <div className='flex items-center justify-between mb-6'>
+                  <span className='text-sm font-semibold text-white'>Total</span>
+                  <span className='text-xl font-bold text-blue-400'>₹{total}</span>
+                </div>
+
+                <button
+                  className='w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-lg shadow-blue-900/30'
+                  onClick={placeOrder}
+                >
+                  Place Order
                 </button>
+
               </div>
             </div>
-          ))}
-        </>
-      )}
-      {data && data.length>0 && (
-        <div className='mt-4 w-full flex items-center justify-end'>
-            <div className='p-5 bg-zinc-800 rounded'>
-              <h1 className='text-2xl text-zinc-200 font-semibold'>
-                Total Amount
-              </h1>
-              <div className='mt-3 flex items-center justify-between text-xl text-zinc-200'>
-                <h2>{data.length} books</h2>
-                <h2>₹ {total}</h2>
-              </div>
-              <div className='w-[100%] mt-3'>
-                <button className='bg-zinc-100 rounded px-4 py-2 flex justify-center w-full font-semibold hover:bg-blue-800 hover:text-white transition-all duration-300' onClick={placeOrder}>
-                  Place your order
-                </button>
-              </div>
-            </div>
-        </div>
-      )}
-    </div>
-    <ToastContainer/>
+
+          </div>
+        )}
+
+      </div>
+      <ToastContainer />
     </>
   )
 }

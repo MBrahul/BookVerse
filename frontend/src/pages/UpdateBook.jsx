@@ -20,16 +20,15 @@ const UpdateBook = () => {
     };
     const navigate = useNavigate();
 
-
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
 
     const getData = async () => {
         const res = await axios.get(`${host}/api/book/get-book/${id}`);
-        // console.log(res.data.data);
         setData(res.data.data);
     }
+
     const handleEditBook = async () => {
         try {
             if (
@@ -41,125 +40,152 @@ const UpdateBook = () => {
                 data.language === ""
             ) {
                 toast.error("All fields are required");
-            }
-            else{
-                const res = await axios.put(`${host}/api/book/update-book/${id}`,data,{headers});
-                // console.log(res.data);
+            } else {
+                const res = await axios.put(`${host}/api/book/update-book/${id}`, data, { headers });
                 alert(res.data.msg);
                 navigate(`/view-book-details/${id}`);
-                // navigate.
             }
         } catch (error) {
             console.log(error);
         }
     }
+
     useEffect(() => {
         getData();
     }, [])
 
+    const inputClass = 'w-full bg-zinc-950/80 text-zinc-100 text-sm px-4 py-3 rounded-xl border border-white/6 outline-none focus:border-blue-500/60 focus:bg-zinc-950 placeholder-zinc-600 transition-all duration-200';
+    const labelClass = 'text-xs font-medium tracking-widest uppercase text-zinc-500';
+
     return (
-        <div className='bg-zinc-900 min-h-screen'>
-            <div className='h-[100%] p-0 md:p-8'>
-                <h1 className='text-3xl md:text-5xl font-semibold text-zinc-500 mb-8'>
-                    Edit Book
-                </h1>
-                <div className='p-4 bg-zinc-800 rounded'>
-                    <div>
-                        <label htmlFor="" className='text-zinc-400'>
-                            Image
-                        </label>
-                        <input type="text"
-                            className='w-full mt-2 bg-zinc-900 text-zinc-100 p-2 outline-none'
-                            placeholder='Url of image'
-                            name='url'
-                            required
-                            value={data.url}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className='mt-4'>
-                        <label htmlFor="" className='text-zinc-400'>
-                            Title of book
-                        </label>
-                        <input type="text"
-                            className='w-full mt-2 bg-zinc-900 text-zinc-100 p-2 outline-none'
-                            placeholder='Title of book'
-                            name='title'
-                            required
-                            value={data.title}
-                            onChange={handleChange}
-                        />
+        <>
+            <div className='min-h-screen bg-zinc-950 px-4 sm:px-8 md:px-16 py-10'>
 
+                {/* Ambient glow */}
+                <div className="fixed top-20 left-10 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="fixed bottom-20 right-10 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
+
+                <div className='relative max-w-2xl mx-auto'>
+
+                    {/* Header */}
+                    <div className="mb-8 border-l-4 border-blue-500 pl-4">
+                        <p className="text-xs tracking-[0.2em] uppercase text-zinc-500 mb-1">Admin Panel</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-white">Edit Book</h1>
                     </div>
 
-                    <div className='mt-4'>
-                        <label htmlFor="" className='text-zinc-400'>
-                            Author of book
-                        </label>
-                        <input type="text"
-                            className='w-full mt-2 bg-zinc-900 text-zinc-100 p-2 outline-none'
-                            placeholder='Author of book'
-                            name='author'
-                            required
-                            value={data.author}
-                            onChange={handleChange}
-                        />
+                    <div className='bg-gradient-to-b from-zinc-800/60 to-zinc-900 border border-white/6 rounded-3xl p-6 sm:p-8 shadow-xl shadow-black/30 backdrop-blur-sm'>
 
-                    </div>
+                        <div className='flex flex-col gap-5'>
 
-                    <div className='mt-4 flex gap-4'>
-                        <div className="w-3/6">
-                            <label htmlFor="" className='text-zinc-400'>
-                                Language of book
-                            </label>
-                            <input type="text"
-                                className='w-full mt-2 bg-zinc-900 text-zinc-100 p-2 outline-none'
-                                placeholder='language of book'
-                                name='language'
-                                required
-                                value={data.language}
-                                onChange={handleChange}
-                            />
+                            {/* Image URL */}
+                            <div className='flex flex-col gap-1.5'>
+                                <label className={labelClass}>Image URL</label>
+                                <input
+                                    type="text"
+                                    className={inputClass}
+                                    placeholder='https://example.com/cover.jpg'
+                                    name='url'
+                                    required
+                                    value={data.url}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            {/* Title */}
+                            <div className='flex flex-col gap-1.5'>
+                                <label className={labelClass}>Title</label>
+                                <input
+                                    type="text"
+                                    className={inputClass}
+                                    placeholder='Title of book'
+                                    name='title'
+                                    required
+                                    value={data.title}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            {/* Author */}
+                            <div className='flex flex-col gap-1.5'>
+                                <label className={labelClass}>Author</label>
+                                <input
+                                    type="text"
+                                    className={inputClass}
+                                    placeholder='Author of book'
+                                    name='author'
+                                    required
+                                    value={data.author}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            {/* Language + Price */}
+                            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                                <div className='flex flex-col gap-1.5'>
+                                    <label className={labelClass}>Language</label>
+                                    <input
+                                        type="text"
+                                        className={inputClass}
+                                        placeholder='e.g. English'
+                                        name='language'
+                                        required
+                                        value={data.language}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className='flex flex-col gap-1.5'>
+                                    <label className={labelClass}>Price (₹)</label>
+                                    <input
+                                        type="number"
+                                        className={inputClass}
+                                        placeholder='e.g. 299'
+                                        name='price'
+                                        required
+                                        value={data.price}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <div className='flex flex-col gap-1.5'>
+                                <label className={labelClass}>Description</label>
+                                <textarea
+                                    className={`${inputClass} resize-none`}
+                                    placeholder='Write a short description of the book...'
+                                    name='desc'
+                                    required
+                                    value={data.desc}
+                                    onChange={handleChange}
+                                    rows={5}
+                                />
+                            </div>
+
+                            {/* Divider */}
+                            <div className='h-px bg-gradient-to-r from-transparent via-white/8 to-transparent' />
+
+                            {/* Actions */}
+                            <div className='flex items-center justify-between gap-4'>
+                                <button
+                                    className='px-5 py-2.5 rounded-xl text-sm font-medium text-zinc-400 border border-white/8 hover:bg-white/5 hover:text-white active:scale-95 transition-all duration-200'
+                                    onClick={() => navigate(`/view-book-details/${id}`)}
+                                >
+                                    ← Cancel
+                                </button>
+                                <button
+                                    className='px-8 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white active:scale-95 transition-all duration-200 shadow-lg shadow-blue-900/30'
+                                    onClick={handleEditBook}
+                                >
+                                    Save Changes
+                                </button>
+                            </div>
+
                         </div>
-
-                        <div className="w-3/6">
-                            <label htmlFor="" className='text-zinc-400'>
-                                Price of book
-                            </label>
-                            <input type="number"
-                                className='w-full mt-2 bg-zinc-900 text-zinc-100 p-2 outline-none'
-                                placeholder='price of book'
-                                name='price'
-                                required
-                                value={data.price}
-                                onChange={handleChange}
-                            />
-                        </div>
-
                     </div>
-
-                    <div className='mt-4'>
-                        <label htmlFor="" className='text-zinc-400'>
-                            Description of book
-                        </label>
-                        <textarea type="text"
-                            className='w-full mt-2 bg-zinc-900 text-zinc-100 p-2 outline-none'
-                            placeholder='Description of book'
-                            name='desc'
-                            required
-                            value={data.desc}
-                            onChange={handleChange}
-                            rows={5}
-                        />
-
-                    </div>
-                    <button className='mt-4 px-3 bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition-all duration-300' onClick={handleEditBook}>
-                        Edit Book
-                    </button>
                 </div>
             </div>
             <ToastContainer />
-        </div>
+        </>
     )
 }
 
