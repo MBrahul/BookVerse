@@ -20,6 +20,8 @@ const Cart = () => {
     try {
       const res = await axios.get(`${host}/api/cart/get-cart`, { headers });
       setData(res.data.data);
+      let totalPrice = res.data?.data?.reduce((acc,curr)=>acc+curr.price,0);
+      setTotal(totalPrice);
     } catch (error) {}
   }
 
@@ -45,12 +47,6 @@ const Cart = () => {
 
   useEffect(() => {
     getData();
-    if (data && data.length > 0) {
-      let total = 0;
-      data.map((item) => { total += item.price; })
-      setTotal(total);
-      total = 0;
-    }
   }, [])
 
   return (

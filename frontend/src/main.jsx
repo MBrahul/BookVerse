@@ -55,7 +55,18 @@ const adminRoleValidate = ({ request, context }, next) => {
     next();
   }
   else {
-    throw redirect('/log-in');
+    throw redirect('/');
+  }
+}
+
+const userRoleValidate = ({ request, context }, next) => {
+  // console.log("Role Validate Middleware");
+  const auth = store.getState().auth;
+  if (auth.role === "user") {
+    next();
+  }
+  else {
+    throw redirect('/');
   }
 }
 
@@ -77,15 +88,16 @@ const router = createBrowserRouter([
       {
         path: "log-in",
         Component: Login,
-        middleware:[restrictRoutesForLoggedInUser]
+        middleware: [restrictRoutesForLoggedInUser]
       },
       {
         path: "sign-up",
         Component: SignUp,
-        middleware:[restrictRoutesForLoggedInUser]
+        middleware: [restrictRoutesForLoggedInUser]
       },
       {
         path: "/cart",
+        middleware: [authMiddleware,userRoleValidate],
         Component: Cart
       },
       {
@@ -100,10 +112,12 @@ const router = createBrowserRouter([
           },
           {
             path: "orderHistory",
+            middleware:[userRoleValidate],
             Component: UserOrderHistory,
           },
           {
             path: "settings",
+            middleware:[userRoleValidate],
             Component: Settings,
           },
           {
