@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fetchUser = require('../middlewares/fetchuser')
 const { body, validationResult } = require("express-validator");
+const verifyRole = require('../middlewares/verifyRole');
 
 // sign up
 router.post('/sign-up', [body('username', 'Username must be 3 letters').isLength({ min: 3 }), body('email', 'Enter valid email').isEmail(), body('password', 'password must be atleast 5 letters').isLength({ min: 5 })
@@ -107,8 +108,10 @@ router.post('/sign-in', [body('username', 'Username must be 3 letters').isLength
             if (data) {
 
                 const data = {
-                    id: user._id,
-                    role: user.role
+                    user: {
+                        id: user._id,
+                        role: user.role
+                    }
                 };
 
                 const token = jwt.sign(data, process.env.JWT_KEY);
@@ -158,7 +161,7 @@ router.get('/get-user-info', fetchUser, async (req, res) => {
 
 //update address
 
-router.put('/update-address', fetchUser, async (req, res) => {
+router.put('/update-address',fetchUser,verifyRole('user'), async (req, res) => {
     try {
         const id = req.user.id;
         const newAddress = req.body.address;
