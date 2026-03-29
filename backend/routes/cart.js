@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const Book = require('../models/book');
-const fetchUser = require('../middlewares/fetchuser');
+// const Book = require('../models/book');
+// const fetchUser = require('../middlewares/fetchuser');
 const User = require('../models/user')
 
 //put book to cart
-router.put('/add-to-cart', fetchUser, async (req, res) => {
+router.put('/add-to-cart', async (req, res) => {
     try {
         const { bookId } = req.body;
         const id = req.user.id;
@@ -17,6 +17,7 @@ router.put('/add-to-cart', fetchUser, async (req, res) => {
         return res.status(200).json({ status: true, msg: "Book added to cart" });
     } catch (error) {
         res.status(500).json({
+            status:false,
             msg: "Internal server error"
         })
     }
@@ -24,7 +25,7 @@ router.put('/add-to-cart', fetchUser, async (req, res) => {
 
 
 // remove book from cart
-router.put('/remove-from-cart', fetchUser, async (req, res) => {
+router.put('/remove-from-cart', async (req, res) => {
     try {
         const id = req.user.id;
         const { bookId } = req.body;
@@ -36,13 +37,14 @@ router.put('/remove-from-cart', fetchUser, async (req, res) => {
         return res.status(200).json({ status: true, msg: "Book removed from cart" });
     } catch (error) {
         res.status(500).json({
+             status:false,
             msg: "Internal server error"
         })
     }
 })
 
 
-router.get('/get-cart', fetchUser, async (req, res) => {
+router.get('/get-cart', async (req, res) => {
     try {
         const id = req.user.id;
         // const user = await User.findById(id);
@@ -54,6 +56,7 @@ router.get('/get-cart', fetchUser, async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
+            status:false,
             msg: "Internal server error"
         })
     }

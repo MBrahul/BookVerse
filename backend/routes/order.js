@@ -3,9 +3,10 @@ const User = require('../models/user');
 const Order = require('../models/order');
 const fetchUser = require('../middlewares/fetchuser');
 const { body, validationResult } = require("express-validator");
+const verifyRole = require('../middlewares/verifyRole');
 
 // place-order
-router.post('/place-order', fetchUser, async (req, res) => {
+router.post('/place-order', verifyRole('user'), async (req, res) => {
     try {
 
         const id = req.user.id;
@@ -37,19 +38,19 @@ router.post('/place-order', fetchUser, async (req, res) => {
 
 //get order histry of a particular user
 
-router.get('/get-order-history',fetchUser,async(req,res)=>{
+router.get('/get-order-history', verifyRole('user'), async (req, res) => {
     try {
         const id = req.user.id;
-        const data = await User.findById(id).select(['orders','-_id']).populate({path:'orders',populate:'book'});
+        const data = await User.findById(id).select(['orders', '-_id']).populate({ path: 'orders', populate: 'book' });
         res.json({
-            status:true,
-            data:data.orders.reverse()
+            status: true,
+            data: data.orders.reverse()
         })
     } catch (error) {
         res.status(500).json({
-            status:false,
-            msg:"Internal server error",
-            error:error
+            status: false,
+            msg: "Internal server error",
+            error: error
         })
     }
 })
@@ -59,7 +60,7 @@ router.get('/get-order-history',fetchUser,async(req,res)=>{
 
 // get-all-orders - admin;
 
-router.get('/get-all-orders', fetchUser, async (req, res) => {
+router.get('/get-all-orders', verifyRole('admin'), async (req, res) => {
     try {
 
         const user = req.user;
@@ -90,7 +91,7 @@ router.get('/get-all-orders', fetchUser, async (req, res) => {
 
 //update-order-status:admin
 
-router.put('/update-order-status/:id', fetchUser, async (req, res) => {
+router.put('/update-order-status/:id', verifyRole('admin'), async (req, res) => {
     try {
         const user = req.user;
         // console.log(user);

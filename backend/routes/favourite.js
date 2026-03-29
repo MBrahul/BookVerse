@@ -5,7 +5,7 @@ const User = require('../models/user')
 // const {body,validationResult} = require("express-validator");   
 
 // add book to favourite
-router.put('/add-book-to-favourite', fetchUser, async (req, res) => {
+router.put('/add-book-to-favourite', async (req, res) => {
     try {
         const id = req.user.id;
         const { bookId } = req.body;
@@ -26,7 +26,7 @@ router.put('/add-book-to-favourite', fetchUser, async (req, res) => {
 
 
 // remove book in favourite
-router.put('/remove-book-from-favourites', fetchUser, async (req, res) => {
+router.put('/remove-book-from-favourites', async (req, res) => {
     try {
         const id = req.user.id;
         const { bookId } = req.body;
@@ -43,7 +43,7 @@ router.put('/remove-book-from-favourites', fetchUser, async (req, res) => {
     }
 })
 
-router.get('/get-favourite-books', fetchUser, async (req, res) => {
+router.get('/get-favourite-books', async (req, res) => {
     try {
         const id = req.user.id;
         // const user = await User.findById(id);

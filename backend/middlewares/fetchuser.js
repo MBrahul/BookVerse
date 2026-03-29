@@ -19,6 +19,7 @@ const fetchUser = async(req,res,next)=>{
                })
             }
             else{
+                // console.log(data);
                 req.user = data.user;
                 next();
             }
