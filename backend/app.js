@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-    origin: 'https://mb-bookverse.netlify.app/',
+    origin: 'https://mb-bookverse.netlify.app',
     credentials: true
 }));
 
