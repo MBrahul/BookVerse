@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Loader from '../Loader/Loader';
 import { toast, ToastContainer } from 'react-toastify';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const Settings = () => {
 
@@ -15,7 +15,7 @@ const Settings = () => {
   const [profile, setProfile] = useState();
 
   const getData = async () => {
-    const res = await axios.get(`${host}/api/auth/get-user-info`, { headers });
+    const res = await axios.get(`${host}/api/user/`, { headers, withCredentials: true });
     setProfile(res.data.data);
     setValues(res.data.data.address);
   }
@@ -26,9 +26,9 @@ const Settings = () => {
 
   const updateAddress = async () => {
     try {
-      const res = await axios.put(`${host}/api/auth/update-address`, { address: value }, { headers });
+      const res = await axios.patch(`${host}/api/user/address`, { address: value }, { headers });
       toast.success(res.data.msg);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   useEffect(() => {

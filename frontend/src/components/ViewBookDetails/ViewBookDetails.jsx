@@ -10,7 +10,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const ViewBookDetails = () => {
 
@@ -21,7 +21,7 @@ const ViewBookDetails = () => {
     const navigate = useNavigate();
 
     const getData = async () => {
-        const res = await axios.get(`${host}/api/book/get-book/${id}`);
+        const res = await axios.get(`${host}/api/book/${id}`);
         setData(res.data.data);
     }
 
@@ -31,25 +31,25 @@ const ViewBookDetails = () => {
 
     const addToFavourites = async () => {
         try {
-            const res = await axios.put(`${host}/api/favourite/add-book-to-favourite`, { bookId: data._id }, { headers });
+            const res = await axios.post(`${host}/api/favourite/book`, { bookId: data._id }, { headers });
             toast.success(res.data.msg);
         } catch (error) {
-            toast.error(error.response.data.msg);
+            toast.error(error.response.data.message);
         }
     }
 
     const addToCart = async () => {
         try {
-            const res = await axios.put(`${host}/api/cart/add-to-cart`, { bookId: data._id }, { headers });
+            const res = await axios.post(`${host}/api/cart/`, { bookId: data._id }, { headers });
             toast.success(res.data.msg);
         } catch (error) {
-            toast.error(error.response.data.msg);
+            toast.error(error.response.data.message);
         }
     }
 
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`${host}/api/book/delete-book/${id}`, { headers });
+            const res = await axios.delete(`${host}/api/book/${id}`, { headers });
             alert(res.data.msg);
             navigate('/all-books');
         } catch (error) {

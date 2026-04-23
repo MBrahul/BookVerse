@@ -3,7 +3,7 @@ import axios from 'axios';
 import Loader from '../Loader/Loader';
 import { Link } from 'react-router-dom';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const UserOrderHistory = () => {
 
@@ -15,7 +15,7 @@ const UserOrderHistory = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get(`${host}/api/order/get-order-history`, { headers });
+      const res = await axios.get(`${host}/api/order/history`, { headers,withCredentials:true });
       setData(res.data.data);
     } catch (error) {}
   }

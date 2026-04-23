@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const BookCard = (props) => {
 
@@ -12,8 +12,12 @@ const BookCard = (props) => {
     };
     const removeFromFavourite = async () => {
         try {
-            const res = await axios.put(`${host}/api/favourite/remove-book-from-favourites`, { bookId: data._id }, { headers });
-        } catch (error) {}
+            const res = await axios.delete(`${host}/api/favourite/book`, {
+                data: { bookId: data._id }, 
+                headers,
+                withCredentials: true
+            });
+        } catch (error) { }
     }
 
     useEffect(() => {
@@ -35,7 +39,7 @@ const BookCard = (props) => {
 
                     {/* Subtle grid pattern */}
                     <div className="absolute inset-0 opacity-[0.03]"
-                        style={{backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '20px 20px'}}
+                        style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '20px 20px' }}
                     />
 
                     {/* Book cover shadow base */}

@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const Cart = () => {
   const [data, setData] = useState();
@@ -18,7 +18,7 @@ const Cart = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get(`${host}/api/cart/get-cart`, { headers });
+      const res = await axios.get(`${host}/api/cart/`, { headers,withCredentials:true });
       setData(res.data.data);
       let totalPrice = res.data?.data?.reduce((acc,curr)=>acc+curr.price,0);
       setTotal(totalPrice);
@@ -27,7 +27,7 @@ const Cart = () => {
 
   const removeFromCart = async (id) => {
     try {
-      const res = await axios.put(`${host}/api/cart/remove-from-cart`, { bookId: id }, { headers });
+      const res = await axios.patch(`${host}/api/cart/${id}`, { bookId: id }, { headers ,withCredentials:true});
       toast.success(res.data.msg);
       getData();
     } catch (error) {
@@ -37,7 +37,7 @@ const Cart = () => {
 
   const placeOrder = async () => {
     try {
-      const res = await axios.post(`${host}/api/order/place-order`, { orders: data }, { headers });
+      const res = await axios.post(`${host}/api/order/place`, { orders: data }, { headers ,withCredentials:true});
       toast.success(res.data.msg);
       navigate('/profile/orderHistory');
     } catch (error) {

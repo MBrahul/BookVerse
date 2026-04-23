@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const SignUp = () => {
     const [values, setValues] = useState({
@@ -24,7 +24,9 @@ const SignUp = () => {
             if (values.username === "" || values.email === "" || values.password === "" || values.address === "") {
                 toast.error("All fields are required");
             } else {
-                const res = await axios.post(`${host}/api/auth/sign-up`, values);
+                const res = await axios.post(`${host}/api/auth/sign-up`, values, {
+                    withCredentials: true
+                });
                 navigate('/log-in');
             }
         } catch (error) {

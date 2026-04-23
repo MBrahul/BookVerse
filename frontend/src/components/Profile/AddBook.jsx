@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const AddBook = () => {
 
@@ -35,7 +35,7 @@ const AddBook = () => {
             ) {
                 toast.error("All fields are required");
             } else {
-                const res = await axios.post(`${host}/api/book/add-book`, data, { headers });
+                const res = await axios.post(`${host}/api/book/`, data, { headers ,withCredentials:true});
                 toast.success(res.data.msg);
                 setData({ url: "", title: "", author: "", price: "", desc: "", language: "" });
             }

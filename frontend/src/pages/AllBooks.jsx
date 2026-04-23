@@ -3,13 +3,13 @@ import Loader from '../components/Loader/Loader'
 import BookCard from '../components/BookCard/BookCard'
 import axios from 'axios';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const AllBooks = () => {
  
   const [data, setData] = useState();
   const getData = async () => {
-    const res = await axios.get(`${host}/api/book/get-all-books`);
+    const res = await axios.get(`${host}/api/book/`,{withCredentials:true});
     setData(res.data.data);
     // console.log(res.data.data);
   }

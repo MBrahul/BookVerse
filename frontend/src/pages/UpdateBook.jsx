@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const UpdateBook = () => {
     const [data, setData] = useState({
@@ -25,7 +25,7 @@ const UpdateBook = () => {
     }
 
     const getData = async () => {
-        const res = await axios.get(`${host}/api/book/get-book/${id}`);
+        const res = await axios.get(`${host}/api/book/${id}`,{withCredentials:true});
         setData(res.data.data);
     }
 
@@ -41,7 +41,7 @@ const UpdateBook = () => {
             ) {
                 toast.error("All fields are required");
             } else {
-                const res = await axios.put(`${host}/api/book/update-book/${id}`, data, { headers });
+                const res = await axios.put(`${host}/api/book/${id}`, data, { headers,withCredentials:true });
                 alert(res.data.msg);
                 navigate(`/view-book-details/${id}`);
             }

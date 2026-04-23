@@ -5,7 +5,7 @@ import { authActions } from '../store/auth';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const Login = () => {
 
@@ -26,16 +26,19 @@ const Login = () => {
             if (values.username === "" || values.password === "") {
                 toast.error("All fields are required");
             } else {
-                const res = await axios.post(`${host}/api/auth/sign-in`, values);
-                localStorage.setItem("id", res.data.data._id);
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("role", res.data.data.role);
+                const res = await axios.post(`${host}/api/auth/sign-in`, values, {
+                    withCredentials: true
+                });
+                // console.log(res.data.data);
+                // localStorage.setItem("id", res.data.data._id);
+                // localStorage.setItem("token", res.data.token);
+                // localStorage.setItem("role", res.data.data.role);
                 dispatch(authActions.login());
                 dispatch(authActions.changeRole(res.data.data.role));
                 navigate('/profile');
             }
         } catch (error) {
-            toast.error(error.response.data.msg);
+            toast.error(error.response.data.message);
         }
     }
 

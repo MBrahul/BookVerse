@@ -97,7 +97,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        middleware: [authMiddleware,userRoleValidate],
+        middleware: [authMiddleware, userRoleValidate],
         Component: Cart
       },
       {
@@ -112,12 +112,12 @@ const router = createBrowserRouter([
           },
           {
             path: "orderHistory",
-            middleware:[userRoleValidate],
+            middleware: [userRoleValidate],
             Component: UserOrderHistory,
           },
           {
             path: "settings",
-            middleware:[userRoleValidate],
+            middleware: [userRoleValidate],
             Component: Settings,
           },
           {

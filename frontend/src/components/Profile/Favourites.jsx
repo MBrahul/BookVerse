@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import BookCard from '../BookCard/BookCard';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const Favourites = () => {
 
@@ -12,7 +12,7 @@ const Favourites = () => {
   const [data, setData] = useState();
 
   const getData = async () => {
-    const res = await axios.get(`${host}/api/favourite/get-favourite-books`, { headers });
+    const res = await axios.get(`${host}/api/favourite/book`, { headers ,withCredentials:true});
     setData(res.data.data);
   }
 

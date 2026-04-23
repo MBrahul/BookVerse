@@ -6,19 +6,24 @@ import axios from 'axios'
 import Loader from '../components/Loader/Loader'
 import MobileNav from '../components/Profile/MobileNav'
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [profile, setProfile] = useState(null);
 
   const headers = {
-    "auth-token": localStorage.getItem("token")
+    "auth-token": localStorage.getItem("token"),
   };
 
   const getData = async () => {
-    const res = await axios.get(`${host}/api/auth/get-user-info`, { headers });
-    setProfile(res.data.data);
+    try {
+      const res = await axios.get(`${host}/api/user`, { headers ,withCredentials:true});
+      // console.log(res);
+      setProfile(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {

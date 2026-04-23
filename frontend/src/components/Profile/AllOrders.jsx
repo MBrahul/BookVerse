@@ -7,7 +7,7 @@ import { FaLink } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import SeeUserData from '../../pages/SeeUserData';
 
-const host = import.meta.env.VITE_HOST || undefined;
+const host = import.meta.env.VITE_HOST || '';
 
 const AllOrders = () => {
 
@@ -22,7 +22,7 @@ const AllOrders = () => {
 
     const getData = async () => {
         try {
-            const res = await axios.get(`${host}/api/order/get-all-orders`, { headers });
+            const res = await axios.get(`${host}/api/order`, { headers ,withCredentials:true});
             // console.log(res.data.data);
             setOrders(res.data.data);
         } catch (error) {
@@ -38,7 +38,7 @@ const AllOrders = () => {
         try {
             if (!status) { }
             else {
-                const res = await axios.put(`${host}/api/order/update-order-status/${id}`, { status }, { headers });
+                const res = await axios.patch(`${host}/api/order/update-status/${id}`, { status }, { headers });
                 getData();
                 alert("Status updated successfully");
             }
