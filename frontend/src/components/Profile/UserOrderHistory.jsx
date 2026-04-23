@@ -80,15 +80,15 @@ const UserOrderHistory = () => {
                     </td>
                     <td className='px-4 py-4 font-semibold text-blue-400'>₹{item.book.price}</td>
                     <td className='px-4 py-4'>
-                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${
+                      <p className={`text-xs font-semibold px-2.5 py-1 rounded-full border text-center ${
                         item.status === "Order Placed"
                           ? "text-yellow-400 bg-yellow-500/10 border-yellow-500/20"
                           : item.status === "Canceled"
                           ? "text-red-400 bg-red-500/10 border-red-500/20"
                           : "text-green-400 bg-green-500/10 border-green-500/20"
                       }`}>
-                        {item.status}
-                      </span>
+                        {item.status} 
+                      </p>
                     </td>
                     <td className='px-4 py-4 text-xs text-zinc-500'>COD</td>
                   </tr>
