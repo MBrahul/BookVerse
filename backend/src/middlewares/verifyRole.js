@@ -1,5 +1,5 @@
 
-const verifyRole = (role) => {
+export const verifyRole = (role) => {
 
     return async (req, res, next) => {
         try {
@@ -17,7 +17,7 @@ const verifyRole = (role) => {
                     msg: `authenticate with ${user.role === 'user' ? 'Admin' : 'Customer'} credentails`
                 })
             }
-            else next();
+            else return next();
 
         } catch (error) {
             return res.status(500).json({
@@ -28,4 +28,3 @@ const verifyRole = (role) => {
     }   
 }
 
-module.exports = verifyRole;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const book = new mongoose.Schema({
     url: {
@@ -27,4 +27,5 @@ const book = new mongoose.Schema({
     }
 
 }, { timestamps: true });
-module.exports = mongoose.model("books",book);
+const Book = mongoose.model("books",book);
+export default Book;

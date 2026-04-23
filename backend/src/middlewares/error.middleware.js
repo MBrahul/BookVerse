@@ -1,0 +1,10 @@
+// errror handling for express
+
+export const errorHandler = (err, req, res, next) => {
+    // console.log("Error middleware called");
+    return res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Something went wrong",
+    });
+
+};
