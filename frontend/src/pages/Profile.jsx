@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Profile/Sidebar'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import Loader from '../components/Loader/Loader'
@@ -11,6 +11,7 @@ const host = import.meta.env.VITE_HOST || '';
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   const headers = {
     "auth-token": localStorage.getItem("token"),
@@ -19,10 +20,10 @@ const Profile = () => {
   const getData = async () => {
     try {
       const res = await axios.get(`${host}/api/user`, { headers ,withCredentials:true});
-      // console.log(res);
       setProfile(res.data.data);
     } catch (error) {
       console.log(error);
+      // navigate('/log-in');
     }
   }
 
