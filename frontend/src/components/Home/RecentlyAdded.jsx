@@ -15,7 +15,7 @@ const RecentlyAdded = () => {
     const getData = async () => {
         try {
             const res = await axios.get(`${host}/api/book/recent`, { withCredentials: true });
-            setData(res.data.data);
+            setData(res.data.data || []);
         } catch (error) {
             console.log("Error", error);
         }
@@ -32,13 +32,13 @@ const RecentlyAdded = () => {
         <>
             <div className='mt-8 px-8'>
                 <h4 className='text-3xl text-yellow-100'>Recently Added Books</h4>
-                {!data.length && (
+                {!data?.length && (
                     <div className='flex items-center justify-center my-8'>
                         <Loader />
                     </div>
                 )}
                 <div className='my-8 grid grid-cols-1 sd:grid-cols-3 md:grid-cols-4 gap-8'>
-                    {data && data.map((item, i) => {
+                    {data && data?.map((item, i) => {
                         return (
                             <div key={i} >
                                 <BookCard data={item} />
