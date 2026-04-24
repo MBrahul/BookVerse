@@ -1,5 +1,12 @@
+# 1. Proxy /api/* to your backend FIRST
 [[redirects]]
   from = "/api/*"
   to = "https://bookverse-n3o3.onrender.com/api/:splat"
   status = 200
   force = true
+
+# 2. Fallback — send everything else to React (SPA routing)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

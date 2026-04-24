@@ -17,7 +17,7 @@ const RecentlyAdded = () => {
             const res = await axios.get(`${host}/api/book/recent`, { withCredentials: true });
             setData(res.data.data || []);
         } catch (error) {
-            console.log("Error", error);
+            console.log("Error : ", error);
         }
     }
 
