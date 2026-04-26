@@ -1,6 +1,7 @@
+# netlify.toml in ROOT
 [build]
   base = "frontend"
-  publish = "dist"
+  publish = "frontend/dist"
   command = "npm run build"
 
 [[redirects]]
@@ -13,10 +14,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-# ✅ Add this — prevents /api/* from being cached
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Cache-Control = "no-store, no-cache, must-revalidate"
-    X-Robots-Tag = "noindex"
