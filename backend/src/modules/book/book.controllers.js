@@ -78,11 +78,22 @@ export const getBookById = async (req, res, next) => {
 
 export const getAllBooks = async (req, res, next) => {
     try {
-        const books = await getAllBooksService();
+        let { cursor, limit } = req.query;
+        const query = {};
+        if (cursor) {
+            query._id = { $lt: cursor };
+        }
+
+        limit = Math.min(Number(limit) || 20, 20);
+
+        const result = await getAllBooksService(query, limit);
+
         return res.status(200).json({
             status: true,
-            data: books
-        })
+            data: result.books,
+            nextCursor: result.nextCursor
+        });
+
     } catch (error) {
         next(error);
     }

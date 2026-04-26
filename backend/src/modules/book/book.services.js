@@ -1,8 +1,9 @@
 import Book from "../../../models/book.js";
 
-export const getAllBooksService = async () => {
-    const books = await Book.find().sort({ createdAt: -1 })
-    return books;
+export const getAllBooksService = async (query, limit) => {
+    const books = await Book.find(query).sort({ _id: -1 }).limit(Number(limit));
+    const nextCursor = books.length === limit ? books[limit - 1]._id : null;
+    return { books, nextCursor };
 }
 
 export const getRecentBooksServie = async () => {
@@ -30,7 +31,7 @@ export const updateBookService = async (id, data) => {
     return book;
 }
 
-export const deleteBookService = async(id)=>{
-    const data =  await Book.findByIdAndDelete(id);
+export const deleteBookService = async (id) => {
+    const data = await Book.findByIdAndDelete(id);
     return data;
 }
