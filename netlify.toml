@@ -1,7 +1,7 @@
 # netlify.toml in ROOT
 [build]
   base = "frontend"
-  publish = "frontend/dist"
+  publish = "dist"
   command = "npm run build"
 
 [[redirects]]
