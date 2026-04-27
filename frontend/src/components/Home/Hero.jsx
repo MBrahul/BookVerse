@@ -16,10 +16,10 @@ const Hero = () => {
                     Uncover captivating stories, enriching knowledge, and endless inspiration in our curated collection of books.
                 </p>
                 <div className='mt-10 flex items-center gap-4'>
-                    <Link to={'/all-books'} className="text-white text-base font-semibold bg-blue-600 hover:bg-blue-500 px-8 py-3 rounded-full transition-all duration-200 shadow-lg shadow-blue-900/30">
+                    <Link to={'/books'} className="text-white text-base font-semibold bg-blue-600 hover:bg-blue-500 px-8 py-3 rounded-full transition-all duration-200 shadow-lg shadow-blue-900/30">
                         Discover Books
                     </Link>
-                    <Link to={'/all-books'} className="text-zinc-300 text-base font-medium hover:text-white px-4 py-3 transition-colors duration-200">
+                    <Link to={'/books'} className="text-zinc-300 text-base font-medium hover:text-white px-4 py-3 transition-colors duration-200">
                         Browse All →
                     </Link>
                 </div>

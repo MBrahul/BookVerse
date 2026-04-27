@@ -12,7 +12,7 @@ import RoleBasedComponent from './components/Profile/RoleBasedComponent.jsx'
 import AddBook from './components/Profile/AddBook'
 import UpdateBook from './pages/UpdateBook'
 import Home from './pages/Home'
-import AllBooks from './pages/AllBooks'
+import Books from './pages/Books.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Cart from './pages/Cart.jsx'
@@ -82,8 +82,8 @@ const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: "all-books",
-        Component: AllBooks
+        path: "books",
+        Component: Books
       },
       {
         path: "log-in",

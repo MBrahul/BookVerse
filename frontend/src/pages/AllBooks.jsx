@@ -42,7 +42,7 @@ const AllBooks = () => {
       setData(null);
       console.log(error);
     }
-    // console.log(res.data.data);
+ 
   }
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const AllBooks = () => {
 
   return (
     <>
-      <div className='bg-zinc-900 px-12 h-auto py-8 text-center min-h-screen'>
+      <div className='w-full px-12 h-auto py-8 text-center'>
         <h4 ref={textRef} className='text-3xl text-yellow-100'>All Books</h4>
         {error && (
           <div ref={loaderRef} className='mt-10 flex items-center justify-center text-red-400 font-thin gap-2'>
