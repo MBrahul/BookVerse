@@ -24,7 +24,7 @@ const SearchedBooks = (props) => {
 
     const getData = async () => {
         try {
-            console.log("Calling api with : ",searchText);
+            // console.log("Calling api with : ", searchText);
             const res = await axios.get(`${host}/api/book/search?text=${searchText}&limit=10`, { withCredentials: true });
 
             setData(res.data.data);
@@ -42,6 +42,15 @@ const SearchedBooks = (props) => {
         setData(null);
         getData();
     }, [searchText]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            setFloatingButton(!entries[0].isIntersecting);
+        })
+        if(textRef.current)observer.observe(textRef.current);
+        return ()=>observer.disconnect();
+    }, []);
+
 
     return (
         <>

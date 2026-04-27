@@ -7,7 +7,7 @@ const Debouncing = (setSearchText) => {
   return (searchText) => {
     clearTimeout(id);
     id = setTimeout(() => {
-      console.log("Search Text : ",searchText);
+      // console.log("Search Text : ",searchText);
       setSearchText(searchText);
     }, 500);
   }
