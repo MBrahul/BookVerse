@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
-import { createBookServie, deleteBookService, getAllBooksService, getBookByIdService, getRecentBooksServie, updateBookService } from "./book.services.js";
+import { createBookServie, deleteBookService, getAllBooksService, getBookByIdService, getRecentBooksServie, getSearchedBooksServie, updateBookService } from "./book.services.js";
+import { validateSearchText } from "./book.validations.js";
 
 export const createBook = async (req, res, next) => {
     try {
@@ -105,6 +106,36 @@ export const getRecentBooks = async (req, res, next) => {
             status: true,
             data: books
         })
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getSearchedBooks = async (req, res, next) => {
+    try {
+
+        let { limit, cursor ,text:searchText} = req.query;
+        // console.log(limit,cursor,searchText);
+        validateSearchText(searchText);
+
+        limit = Math.min(Number(limit) || 10, 10);
+
+        const query = {
+            $text: { $search: searchText }
+        };
+
+        if (cursor) {
+            query._id = { $lt: cursor };
+        }
+
+        const result = await getSearchedBooksServie(query, limit);
+
+        return res.status(200).json({
+            status: true,
+            data: result.books,
+            nextCursor: result.nextCursor
+        });
+
     } catch (error) {
         next(error);
     }

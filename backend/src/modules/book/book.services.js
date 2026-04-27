@@ -35,3 +35,19 @@ export const deleteBookService = async (id) => {
     const data = await Book.findByIdAndDelete(id);
     return data;
 }
+
+export const getSearchedBooksServie = async (query, limit) => {
+    const books = await Book.find(query)
+        .sort({
+            score: { $meta: "textScore" },
+            _id: -1
+        })
+        .limit(Number(limit))
+        .select({
+            score: { $meta: "textScore" }
+        });
+
+    const nextCursor =
+        books.length === limit ? books[limit - 1]._id : null;
+    return { books, nextCursor };
+}
