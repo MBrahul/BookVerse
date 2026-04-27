@@ -6,7 +6,7 @@ const host = import.meta.env.VITE_HOST || '';
 
 const BookCard = (props) => {
 
-    const { data, favourite } = props;
+    const { data, favourite ,setRefresh} = props;
     const headers = {
         "auth-token": localStorage.getItem("token")
     };
@@ -17,6 +17,7 @@ const BookCard = (props) => {
                 headers,
                 withCredentials: true
             });
+            setRefresh((prev)=>!prev);
         } catch (error) { }
     }
 
@@ -30,6 +31,7 @@ const BookCard = (props) => {
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             <Link to={`/view-book-details/${data._id}`} className="flex flex-col flex-1">
+            
 
                 {/* Cover area */}
                 <div className="relative flex items-center justify-center px-8 pt-10 pb-6 overflow-hidden">

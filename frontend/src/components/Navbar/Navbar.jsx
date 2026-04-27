@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Navbar = () => {
     const links = [
         { title: "Home", url: "/" },
-        { title: "All Books", url: "/all-books" },
+        { title: "All Books", url: "/books" },
         { title: "Cart", url: "/cart" },
         { title: "Profile", url: "/profile" },
         { title: "Admin Profile", url: "/profile" },

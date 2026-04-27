@@ -12,7 +12,7 @@ const SearchedBooks = (props) => {
     const { searchText } = props;
 
     const [data, setData] = useState(null);
-
+    
     // const [limit, setLimit] = useState(20);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);

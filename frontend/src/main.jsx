@@ -70,6 +70,11 @@ const userRoleValidate = ({ request, context }, next) => {
   }
 }
 
+const changeDocumentTitle = (title) => {
+  return () => {
+    document.title = title;
+  }
+}
 
 const router = createBrowserRouter([
   {
@@ -83,27 +88,28 @@ const router = createBrowserRouter([
       },
       {
         path: "books",
-        Component: Books
+        Component: Books,
+        middleware: [changeDocumentTitle("BookVerse - Books")]
       },
       {
         path: "log-in",
         Component: Login,
-        middleware: [restrictRoutesForLoggedInUser]
+        middleware: [restrictRoutesForLoggedInUser,changeDocumentTitle("BookVerse - Login")]
       },
       {
         path: "sign-up",
         Component: SignUp,
-        middleware: [restrictRoutesForLoggedInUser]
+        middleware: [restrictRoutesForLoggedInUser,changeDocumentTitle("BookVerse - Signup")]
       },
       {
         path: "/cart",
-        middleware: [authMiddleware, userRoleValidate],
+        middleware: [authMiddleware, userRoleValidate,changeDocumentTitle("BookVerse - Cart")],
         Component: Cart
       },
       {
         path: "/profile",
         Component: Profile,
-        middleware: [authMiddleware],
+        middleware: [authMiddleware,changeDocumentTitle("BookVerse - Profile")],
         children: [
           {
             index: true,

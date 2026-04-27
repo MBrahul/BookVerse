@@ -10,6 +10,7 @@ const Favourites = () => {
     "auth-token": localStorage.getItem("token")
   };
   const [data, setData] = useState();
+  const [refresh , setRefresh] = useState(false);
 
   const getData = async () => {
     const res = await axios.get(`${host}/api/favourite/book`, { headers ,withCredentials:true});
@@ -18,7 +19,7 @@ const Favourites = () => {
 
   useEffect(() => {
     getData();
-  }, [data]);
+  }, [refresh]);
 
   return (
     <div className='w-full'>
@@ -41,7 +42,7 @@ const Favourites = () => {
       {/* Grid */}
       <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5'>
         {data && data.map((item, i) => (
-          <BookCard data={item} key={i} favourite={true} />
+          <BookCard data={item} key={i} favourite={true} setRefresh = {setRefresh} />
         ))}
       </div>
 

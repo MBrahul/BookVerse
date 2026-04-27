@@ -18,7 +18,7 @@ const Books = () => {
   const [searchText, setSearchText] = useState("");
   const [text,setText] =  useState("");
   const search = useRef(Debouncing(setSearchText));
-
+  
   return (
     <div className='bg-zinc-900 min-h-screen py-8 flex flex-col items-center'>
       <div className='relative w-full lg:w-[60vw]'>

@@ -21,8 +21,13 @@ const ViewBookDetails = () => {
     const navigate = useNavigate();
 
     const getData = async () => {
-        const res = await axios.get(`${host}/api/book/${id}`);
-        setData(res.data.data);
+        try {
+            const res = await axios.get(`${host}/api/book/${id}`);
+            setData(res.data.data);
+            document.title = res.data?.data?.title + ' || BookVerse';
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const headers = {
@@ -31,7 +36,7 @@ const ViewBookDetails = () => {
 
     const addToFavourites = async () => {
         try {
-            const res = await axios.post(`${host}/api/favourite/book`, { bookId: data._id }, { headers });
+            const res = await axios.post(`${host}/api/favourite/book`, { bookId: data._id }, { headers,withCredentials:true });
             toast.success(res.data.msg);
         } catch (error) {
             toast.error(error.response.data.message);
@@ -40,7 +45,7 @@ const ViewBookDetails = () => {
 
     const addToCart = async () => {
         try {
-            const res = await axios.post(`${host}/api/cart/`, { bookId: data._id }, { headers });
+            const res = await axios.post(`${host}/api/cart/`, { bookId: data._id }, { headers,withCredentials:true });
             toast.success(res.data.msg);
         } catch (error) {
             toast.error(error.response.data.message);
@@ -49,7 +54,7 @@ const ViewBookDetails = () => {
 
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`${host}/api/book/${id}`, { headers });
+            const res = await axios.delete(`${host}/api/book/${id}`, { headers ,withCredentials:true});
             alert(res.data.msg);
             navigate('/all-books');
         } catch (error) {
@@ -77,13 +82,13 @@ const ViewBookDetails = () => {
                     <div className="fixed bottom-20 right-10 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
 
                     <div className='relative max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12'>
-
+                        {/* 
                         <button
                             onClick={() => navigate(-1)}
                             className='relative mb-8 flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-zinc-500 hover:text-white border border-white/6 hover:border-white/20 bg-white/3 hover:bg-white/6 px-4 py-2 rounded-full transition-all duration-200 active:scale-95 w-fit h-fit'
                         >
                             ← Back
-                        </button>
+                        </button> */}
 
                         {/* LEFT — Cover */}
                         <div className='w-full lg:w-2/5'>
