@@ -19,15 +19,21 @@ const ViewBookDetails = () => {
     const { id } = useParams();
     const [data, setData] = useState();
     const navigate = useNavigate();
+    const [error ,setError] = useState(null);
+    const [loading ,setLoading] = useState(false);
 
     const getData = async () => {
+        setLoading(true);
         try {
+            setError(null);
             const res = await axios.get(`${host}/api/book/${id}`);
             setData(res.data.data);
-            document.title = res.data?.data?.title + ' || BookVerse';
+            document.title = (res.data?.data?.title || "Not Found") + ' || BookVerse';
         } catch (error) {
             console.log(error);
+            setError(error.response?.data?.message || "Something Went Wrong");
         }
+        setLoading(false);
     }
 
     const headers = {
@@ -56,7 +62,7 @@ const ViewBookDetails = () => {
         try {
             const res = await axios.delete(`${host}/api/book/${id}`, { headers ,withCredentials:true});
             alert(res.data.msg);
-            navigate('/all-books');
+            navigate('/books');
         } catch (error) {
             console.log(error);
         }
@@ -68,9 +74,15 @@ const ViewBookDetails = () => {
 
     return (
         <>
-            {!data && (
+            {loading && (
                 <div className='h-screen bg-zinc-950 flex items-center justify-center'>
                     <Loader />
+                </div>
+            )}
+
+            {error && (
+                <div className='h-screen bg-zinc-950 flex items-center justify-center text-gray-400 font-thin'>
+                    <p>{error}</p>
                 </div>
             )}
 
@@ -82,13 +94,13 @@ const ViewBookDetails = () => {
                     <div className="fixed bottom-20 right-10 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
 
                     <div className='relative max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12'>
-                        {/* 
+                        
                         <button
                             onClick={() => navigate(-1)}
                             className='relative mb-8 flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-zinc-500 hover:text-white border border-white/6 hover:border-white/20 bg-white/3 hover:bg-white/6 px-4 py-2 rounded-full transition-all duration-200 active:scale-95 w-fit h-fit'
                         >
                             ← Back
-                        </button> */}
+                        </button>
 
                         {/* LEFT — Cover */}
                         <div className='w-full lg:w-2/5'>

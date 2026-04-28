@@ -13,6 +13,8 @@ const SignUp = () => {
         address: ""
     });
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -20,6 +22,7 @@ const SignUp = () => {
     }
 
     const handleSignUp = async () => {
+        setLoading(true);
         try {
             if (values.username === "" || values.email === "" || values.password === "" || values.address === "") {
                 toast.error("All fields are required");
@@ -30,8 +33,9 @@ const SignUp = () => {
                 navigate('/log-in');
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Something Went Wrong");
         }
+        setLoading(false);
     }
 
     return (
@@ -110,10 +114,10 @@ const SignUp = () => {
 
                         {/* Button */}
                         <button
-                            className="mt-8 w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-lg shadow-blue-900/30"
+                            className={`mt-8 w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-lg shadow-blue-900/30 cursor-${loading?"not-allowed":"pointer"}`}
                             onClick={handleSignUp}
                         >
-                            Sign Up
+                            {loading?"Signing-up":"Sign Up"}
                         </button>
 
                         {/* Divider */}

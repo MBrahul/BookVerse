@@ -4,6 +4,7 @@ import BookCard from '../components/BookCard/BookCard'
 import axios from 'axios';
 import { BiSolidError } from "react-icons/bi";
 import { FaArrowUp } from "react-icons/fa";
+import Dropdown from '../components/Dropdown';
 
 const host = import.meta.env.VITE_HOST || '';
 
@@ -19,6 +20,26 @@ const AllBooks = () => {
   const loaderRef = useRef(null);
   const cursorRef = useRef(null);
   const textRef = useRef(null);
+
+  const options = [
+    {
+      value: "Price Low To High", label: "Price Low To High", icon: "👤", onClick: () => {
+        data.sort((a, b) => a.price - b.price);
+        setData([...data]);
+      }
+    },
+    {
+      value: "Price High To Low", label: "Price High To Low", icon: "⚙️", onClick: () => {
+        data.sort((a, b) => b.price - a.price);
+        setData([...data]);
+      }
+    },
+    // { value: "billing", label: "Billing", icon: "💳" },
+    // { value: "team", label: "Team", icon: "👥" },
+    // { divider: true },
+    // { value: "logout", label: "Log out", icon: "🚪", danger: true },
+  ];
+
 
   const getData = async () => {
     try {
@@ -42,7 +63,7 @@ const AllBooks = () => {
       setData(null);
       console.log(error);
     }
- 
+
   }
 
   useEffect(() => {
@@ -79,10 +100,15 @@ const AllBooks = () => {
 
   }, []);
 
+
+
   return (
     <>
-      <div className='w-full px-12 h-auto py-8 text-center'>
+      <div className='w-full px-12 h-auto py-8 text-center flex flex-col'>
         <h4 ref={textRef} className='text-3xl text-yellow-100'>All Books</h4>
+        {data && cursor === null && (
+          <div className='my-2 self-end'><Dropdown options={options} /></div>
+        )}
         {error && (
           <div ref={loaderRef} className='mt-10 flex items-center justify-center text-red-400 font-thin gap-2'>
             <p>{error}</p>
@@ -115,8 +141,8 @@ const AllBooks = () => {
 
       <div
         className={`fixed bottom-[20px] right-[20px] z-[999] transition-all duration-300 ${floatingButton
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-5 pointer-events-none"
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-5 pointer-events-none"
           }`}
       >
         <button className="p-4 rounded-full shadow border border-blue-500 bg-blue-500 text-white" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>

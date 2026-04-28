@@ -21,7 +21,7 @@ const Books = () => {
   
   return (
     <div className='bg-zinc-900 min-h-screen py-8 flex flex-col items-center'>
-      <div className='relative w-full lg:w-[60vw]'>
+      <div className='relative w-[80vw] lg:w-[60vw]'>
         <svg
           className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 w-4 h-4'
           xmlns="http://www.w3.org/2000/svg"

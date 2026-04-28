@@ -4,6 +4,7 @@ import BookCard from '../components/BookCard/BookCard'
 import axios from 'axios';
 import { BiSolidError } from "react-icons/bi";
 import { FaArrowUp } from "react-icons/fa";
+import Dropdown from '../components/Dropdown';
 
 const host = import.meta.env.VITE_HOST || '';
 
@@ -12,7 +13,7 @@ const SearchedBooks = (props) => {
     const { searchText } = props;
 
     const [data, setData] = useState(null);
-    
+
     // const [limit, setLimit] = useState(20);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -21,6 +22,25 @@ const SearchedBooks = (props) => {
     const loaderRef = useRef(null);
     const cursorRef = useRef(null);
     const textRef = useRef(null);
+
+    const options = [
+        {
+            value: "Price Low To High", label: "Price Low To High", icon: "👤", onClick: () => {
+                data.sort((a, b) => a.price - b.price);
+                setData([...data]);
+            }
+        },
+        {
+            value: "Price High To Low", label: "Price High To Low", icon: "⚙️", onClick: () => {
+                data.sort((a, b) => b.price - a.price);
+                setData([...data]);
+            }
+        },
+        // { value: "billing", label: "Billing", icon: "💳" },
+        // { value: "team", label: "Team", icon: "👥" },
+        // { divider: true },
+        // { value: "logout", label: "Log out", icon: "🚪", danger: true },
+    ];
 
     const getData = async () => {
         try {
@@ -47,14 +67,14 @@ const SearchedBooks = (props) => {
         const observer = new IntersectionObserver((entries) => {
             setFloatingButton(!entries[0].isIntersecting);
         })
-        if(textRef.current)observer.observe(textRef.current);
-        return ()=>observer.disconnect();
+        if (textRef.current) observer.observe(textRef.current);
+        return () => observer.disconnect();
     }, []);
 
 
     return (
         <>
-            <div className='w-full px-12 h-auto py-8 text-center'>
+            <div className='w-full px-12 h-auto py-8 text-center flex flex-col'>
                 <h4 ref={textRef} className='text-3xl text-yellow-100'>Search Result</h4>
                 {error && (
                     <div className='mt-10 flex items-center justify-center text-red-400 font-thin gap-2'>
@@ -66,6 +86,9 @@ const SearchedBooks = (props) => {
                     <div className='mt-10 flex items-center justify-center text-2xl lg:text-5xl text-zinc-600'>
                         No Books Found
                     </div>
+                )}
+                {data && data.length > 0 && (
+                    <div className='my-2 self-end'><Dropdown options={options} /></div>
                 )}
                 {data && data?.length > 0 && (
                     <div className='my-8 grid grid-cols-1 sd:grid-cols-3 md:grid-cols-4 gap-8'>

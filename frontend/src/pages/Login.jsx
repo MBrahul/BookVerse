@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { authActions } from '../store/auth';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import Loader from '../components/Loader/Loader';
 
 const host = import.meta.env.VITE_HOST || '';
 
@@ -14,6 +15,8 @@ const Login = () => {
         password: "",
     });
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -22,6 +25,7 @@ const Login = () => {
     }
 
     const handleLogIn = async () => {
+        setLoading(true);
         try {
             if (values.username === "" || values.password === "") {
                 toast.error("All fields are required");
@@ -38,8 +42,9 @@ const Login = () => {
                 navigate('/profile');
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Something went wrong!");
         }
+        setLoading(false);
     }
 
     return (
@@ -69,7 +74,7 @@ const Login = () => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full bg-zinc-950/80 text-zinc-100 text-sm px-4 py-3 rounded-xl border border-white/6 outline-none focus:border-blue-500/60 focus:bg-zinc-950 placeholder-zinc-600 transition-all duration-200"
+                                    className="w-full bg-zinc-950/80 text-zinc-100 text-sm px-4 py-3 rounded-xl border border-white/6 outline-none focus:border-blue-500/60 focus:bg-zinc-950 placeholder-zinc-600 transition-all duration-200 disable"
                                     placeholder="Enter your username"
                                     required
                                     name='username'
@@ -96,10 +101,12 @@ const Login = () => {
 
                         {/* Button */}
                         <button
-                            className="mt-8 w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-lg shadow-blue-900/30"
+                            className={`mt-8 w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-lg shadow-blue-900/30 cursor-${loading ? "not-allowed" : "pointer"}`}
                             onClick={handleLogIn}
+                            disabled={loading}
                         >
-                            Log In
+                            {loading ? "Logging-in..." : "Log In"}
+
                         </button>
 
                         {/* Divider */}

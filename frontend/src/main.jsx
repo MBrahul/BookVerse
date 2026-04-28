@@ -19,6 +19,7 @@ import Cart from './pages/Cart.jsx'
 import Profile from './pages/Profile.jsx'
 import ViewBookDetails from './components/ViewBookDetails/ViewBookDetails.jsx'
 import { authActions } from './store/auth.js'
+import RootErrorBoundary from './RootErrorBoundary.jsx'
 
 
 const appMiddleware = () => {
@@ -81,6 +82,7 @@ const router = createBrowserRouter([
     path: "/",
     Component: App,
     middleware: [appMiddleware],
+    ErrorBoundary:RootErrorBoundary,
     children: [
       {
         index: true,
